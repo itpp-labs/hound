@@ -280,6 +280,7 @@ button:focus {
   margin: 10px 0 20px;
   border-radius: 3px;
   border: 1px solid #d8d8d8;
+  position: relative;
 }
 
 .file > .title {
@@ -436,4 +437,21 @@ button:focus {
 
 .selection-tooltip.active {
   display: block;
+}
+
+.copy-file-path {
+  color: #666;
+  cursor: pointer;
+  margin-left: 5px;
+  padding: 4px;
+}
+.copy-file-path:hover {
+  color: #09f;
+}
+
+.copy-file-path-textarea {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  opacity: 0;
 }
