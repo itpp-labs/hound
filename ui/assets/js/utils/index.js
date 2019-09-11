@@ -130,25 +130,18 @@ export const EscapeHtml = ((div) => {
  * Produce html for a line using the regexp to highlight matches.
  */
 export const ContentFor = (line, regexp) => {
-    if (!line.Match) {
-        return EscapeHtml(line.Content);
-    }
-    let content = line.Content;
-    const buffer = [];
-
-    while (true) {
-        regexp.lastIndex = 0;
-        const m = regexp.exec(content);
-        if (!m) {
-            buffer.push(EscapeHtml(content));
-            break;
+    if (line.Match) {
+        let index = 0;
+        let content = '';
+        let arr;
+        while ( (arr = regexp.exec(line.Content)) !== null ) {
+            content += `${ EscapeHtml(line.Content.slice(index, arr.index)) }<em>${ EscapeHtml(arr[0]) }</em>`;
+            index = arr.index + arr[0].length;
         }
-
-        buffer.push(EscapeHtml(content.substring(0, regexp.lastIndex - m[0].length)));
-        buffer.push( '<em>' + EscapeHtml(m[0]) + '</em>');
-        content = content.substring(regexp.lastIndex);
+        content += EscapeHtml( line.Content.slice(index) );
+        return content;
     }
-    return buffer.join('');
+    return EscapeHtml(line.Content);
 };
 
 /**
