@@ -19,7 +19,7 @@ export const SearchBar = (props) => {
 
     useEffect( () => {
         setSearch({ query, files, repos, ignoreCase });
-    }, [query, files, repos, ignoreCase, allRepos, stats]);
+    }, [query, files, repos, ignoreCase]);
 
     const repoOptions = allRepos.map(rname => ({
         value: rname,
