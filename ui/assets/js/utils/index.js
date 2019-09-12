@@ -127,20 +127,85 @@ export const EscapeHtml = ((div) => {
 })( document.createElement('div') );
 
 /**
- * Produce html for a line using the regexp to highlight matches.
+ * Produce html for a line using the regexp to highlight matches and the regexp to replace pattern-links.
  */
-export const ContentFor = (line, regexp) => {
+export const ContentFor = (repo, line, regexp) => {
+
+    const startEm = '<em>';
+    const endEm = '</em>';
+    const indexes = [];
+
+    // Store the search matches
     if (line.Match) {
-        let index = 0;
-        let content = '';
-        let arr;
-        while ( (arr = regexp.exec(line.Content)) !== null ) {
-            content += `${ EscapeHtml(line.Content.slice(index, arr.index)) }<em>${ EscapeHtml(arr[0]) }</em>`;
-            index = arr.index + arr[0].length;
+        let matches;
+        let len = 0;
+        while ( (matches = regexp.exec(line.Content)) !== null ) {
+            if (!len) { len = matches[0].length; }
+            indexes.push(
+                { index: matches.index, element: startEm },
+                { index: matches.index + len, element: endEm }
+            );
         }
-        content += EscapeHtml( line.Content.slice(index) );
-        return content;
+        regexp.lastIndex = 0;
     }
+
+    // Store links matches
+    if (
+        repo['pattern-link-reg'] &&
+        repo['pattern-link-reg'].test(line.Content)
+    ) {
+        repo['pattern-links'].forEach((item) => {
+            if ( item.reg.test(line.Content) ) {
+                item.reg.lastIndex = 0;
+                let matches;
+                while ( (matches = item.reg.exec(line.Content)) !== null ) {
+                    indexes.push(
+                        {
+                            index: matches.index,
+                            element: `<a href="${ matches[0].replace(item.regcopy, item.link) }" target="_blank" rel="noopener noreferrer">`
+                        },
+                        {
+                            index: matches.index + matches[0].length,
+                            element: '</a>'
+                        }
+                    );
+                }
+            }
+            item.reg.lastIndex = 0;
+        });
+    }
+
+    if (indexes.length) {
+
+        // Order the array
+        indexes.sort((a, b) => a.index - b.index);
+
+        let formatting = false;
+        const totalIndexes = indexes.length - 1;
+
+        return indexes.reduce((content, item, index, array) => {
+
+            content += EscapeHtml(line.Content.slice(index ? array[index - 1].index : 0, item.index));
+
+            if (item.element !== startEm && item.element !== endEm && formatting) {
+                content += `${endEm}${item.element}${startEm}`;
+            } else {
+                content += item.element;
+            }
+
+            if (index === totalIndexes) {
+                content += EscapeHtml(line.Content.slice(array[index].index));
+            }
+
+            if (item.element === startEm) { formatting = true; }
+            if (item.element === endEm) { formatting = false; }
+
+            return content;
+
+        }, '');
+
+    }
+
     return EscapeHtml(line.Content);
 };
 

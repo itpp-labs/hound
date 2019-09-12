@@ -34,8 +34,8 @@ export const SelectionManager = {
             return {
                 text: selectionText,
                 url: searchURL,
-                left: selectionRect.left + selectionRect.width + 5,
-                top: selectionRect.top + scrollTop + 5
+                left: selectionRect.left,
+                top: selectionRect.top + scrollTop + 25,
             };
 
         }

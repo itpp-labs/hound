@@ -2,6 +2,7 @@ import reqwest from 'reqwest';
 import { Signal } from './Signal';
 import { UrlToRepo } from './common';
 import { ParamsFromUrl } from '../utils';
+import { parsePatternLinks } from './PatternLinks';
 
 /**
  * The data model for the UI is responsible for conducting searches and managing
@@ -52,7 +53,7 @@ export const Model = {
             url: 'api/v1/repos',
             type: 'json',
             success (data) {
-                _this.repos = data;
+                _this.repos = parsePatternLinks(data);
                 next();
             },
             error (xhr, status, err) {

@@ -348,11 +348,15 @@ button:focus {
   white-space: pre;
 }
 
-.match > .line > .lval > em {
+.match > .line > .lval em {
   font-style: normal;
   font-weight: bold;
   color: #333;
   background-color: rgba(255,255,140,0.5);
+}
+
+.match > .line > .lval a em {
+  color: #09f;
 }
 
 .table-container table {

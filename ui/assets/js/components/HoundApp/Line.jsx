@@ -5,7 +5,7 @@ import { ContentFor } from '../../utils';
 export const Line = (props) => {
 
     const { line, rev, repo, filename, regexp } = props;
-    const content = ContentFor(line, regexp);
+    const content = ContentFor(Model.repos[ repo ], line, regexp);
 
     return (
         <div className="line">

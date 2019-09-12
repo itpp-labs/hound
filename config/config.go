@@ -23,6 +23,11 @@ type UrlPattern struct {
 	Anchor  string `json:"anchor"`
 }
 
+type PatternLink struct {
+    Pattern string `json:"pattern"`
+    Link    string `json:"link"`
+}
+
 type Repo struct {
 	Url               string         `json:"url"`
 	MsBetweenPolls    int            `json:"ms-between-poll"`
@@ -32,6 +37,7 @@ type Repo struct {
 	ExcludeDotFiles   bool           `json:"exclude-dot-files"`
 	EnablePollUpdates *bool          `json:"enable-poll-updates"`
 	EnablePushUpdates *bool          `json:"enable-push-updates"`
+	PatternLinks      []PatternLink  `json:"pattern-links"`
 }
 
 // Used for interpreting the config value for fields that use *bool. If a value
