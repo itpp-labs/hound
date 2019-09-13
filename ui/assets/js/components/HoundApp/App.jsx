@@ -41,7 +41,7 @@ export const App = function (props) {
         });
 
         Model.didLoadMore.tap((model, repo, results) => {
-            setResults(results);
+            setResults([...results]);
             setError(null);
         });
 
