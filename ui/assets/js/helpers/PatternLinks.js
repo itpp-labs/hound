@@ -4,7 +4,7 @@ const getPatternLinkRegExp = (patternLinks) => {
         item.regcopy = new RegExp(item.pattern, 'g');
     });
     const regArray = patternLinks.map((item) => item.pattern);
-    return new RegExp(`(?:${ regArray.join('|') })`);
+    return new RegExp(`(?:${ regArray.join('|') })`, 'g');
 };
 
 export const parsePatternLinks = (data) => {

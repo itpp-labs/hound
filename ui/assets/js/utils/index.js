@@ -150,29 +150,42 @@ export const ContentFor = (repo, line, regexp) => {
     }
 
     // Store links matches
-    if (
-        repo['pattern-link-reg'] &&
-        repo['pattern-link-reg'].test(line.Content)
-    ) {
-        repo['pattern-links'].forEach((item) => {
-            if ( item.reg.test(line.Content) ) {
-                item.reg.lastIndex = 0;
-                let matches;
-                while ( (matches = item.reg.exec(line.Content)) !== null ) {
-                    indexes.push(
-                        {
-                            index: matches.index,
-                            element: `<a href="${ matches[0].replace(item.regcopy, item.link) }" target="_blank" rel="noopener noreferrer">`
-                        },
-                        {
-                            index: matches.index + matches[0].length,
-                            element: '</a>'
-                        }
-                    );
+    if ( repo['pattern-link-reg'] ) {
+
+        const matches = line.Content.match(repo['pattern-link-reg']);
+
+        if (matches) {
+
+            const numberOfMatches = matches.length;
+            let matchesProcessed = 0;
+
+            // Iterate over all the pattern replacement items
+            repo['pattern-links'].some((item) => {
+                if ( item.reg.test(line.Content) ) {
+                    item.reg.lastIndex = 0;
+                    let matches;
+                    while ( (matches = item.reg.exec(line.Content)) !== null ) {
+                        indexes.push(
+                            {
+                                index: matches.index,
+                                element: `<a href="${ matches[0].replace(item.regcopy, item.link) }" target="_blank" rel="noopener noreferrer">`
+                            },
+                            {
+                                index: matches.index + matches[0].length,
+                                element: '</a>'
+                            }
+                        );
+                    }
+                    // Exit the loop when all matches have been processed
+                    matchesProcessed++;
+                    if (matchesProcessed === numberOfMatches) {
+                        return true;
+                    }
                 }
-            }
-            item.reg.lastIndex = 0;
-        });
+                item.reg.lastIndex = 0;
+            });
+
+        }
     }
 
     if (indexes.length) {
