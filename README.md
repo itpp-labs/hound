@@ -32,15 +32,11 @@ go get github.com/itpp-labs/hound/cmds/...
 
 ### Using Docker (1.4+)
 
-0. Configure access to github registry with [token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line):
-
-       docker login docker.pkg.github.com -u GITHUB_USERNAME -p GITHUB_TOKEN 
-
 1. Create a [config.json](config-example.json) in a directory with your list of repositories.
 
 2. Run 
 
-       docker run -d -p 6080:6080 --name hound -v $(pwd):/data docker.pkg.github.com/itpp-labs/hound/production
+       docker run -d -p 6080:6080 --name hound -v $(pwd):/data ghcr.io/itpp-labs/hound/production
 
 
 You should be able to navigate to [http://localhost:6080/](http://localhost:6080/) as usual.
