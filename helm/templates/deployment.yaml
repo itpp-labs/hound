@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hound-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hound
+  template:
+    metadata:
+      labels:
+        app: hound
+    spec:
+      imagePullSecrets:
+        - name: github-docker-registry-secret
+      containers:
+        - name: hound
+          image: {{ include "imageFull" . }}
+          ports:
+            - containerPort: 6080

@@ -1,0 +1,7 @@
+# Following values must be specified
+image:
+  registry: docker.pkg.github.com
+  name: it-projects-llc/hound/pr
+  tag:
+  username:
+  password:
