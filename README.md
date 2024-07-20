@@ -8,7 +8,7 @@ Hound is an extremely fast source code search engine. The core is based on this 
 
 ![Hound Screen Capture](screen_capture.gif)
 
-Live demo: https://odoo-source.com/
+Live demo: https://search.odooism.com/
 
 ## Quick Start Guide
 
@@ -120,6 +120,9 @@ make
 
 If this is your only Go project, you can set your GOPATH just for Hound:
 ```
+cd
+mkdir go
+cd go
 git clone https://github.com/itpp-labs/hound.git src/github.com/itpp-labs/hound
 GOPATH=$(pwd) make -C src/github.com/itpp-labs/hound
 ```

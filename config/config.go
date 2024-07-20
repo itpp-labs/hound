@@ -78,6 +78,7 @@ type Config struct {
 	MaxReposInNextResult   int               `json:"max-repos-in-next-result"`
 	HealthCheckURI         string            `json:"health-check-uri"`
 	InitSearch             map[string]string `json:"init-search"`
+	Ads                    []*string         `json:"ads"`
 }
 
 type Favicon struct {
