@@ -200,7 +200,7 @@ func renderForPrd(w io.Writer, c *content, cfg *config.Config, cfgJson string, i
 		"Source":           html_template.HTML(buf.String()),
 		"Host":             r.Host,
 		"InitSearch":       initSearch,
-		"Promo":            randomAd,
+		"Promo":            html_template.HTML(randomAd),
 	})
 }
 
