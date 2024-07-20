@@ -191,9 +191,7 @@ func renderForPrd(w io.Writer, c *content, cfg *config.Config, cfgJson string, i
 		randomIndex := rand.Intn(len(cfg.Ads))
 
 		// Access the random ad string
-		randomAd := cfg.Ads[randomIndex]
-	} else {
-		randomAd := ""
+		randomAd = *cfg.Ads[randomIndex]
 	}
 
 	return c.tpl.Execute(w, map[string]interface{}{
