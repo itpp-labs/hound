@@ -7,11 +7,13 @@ import (
 	html_template "html/template"
 	"io"
 	"log"
+	"math/rand"
 	"net/http"
 	"path/filepath"
 	"runtime"
 	"strings"
 	text_template "text/template"
+	"time"
 
 	"github.com/itpp-labs/hound/config"
 )
@@ -178,6 +180,8 @@ func renderForPrd(w io.Writer, c *content, cfg *config.Config, cfgJson string, i
 		buf.Write(a)
 	}
 	buf.WriteString("</script>")
+
+	var randomAd string // Initialize randomAd with an empty string
 
 	if cfg.Ads != nil && len(cfg.Ads) > 0 {
 		// Seed the random number generator (typically done once)
