@@ -179,12 +179,26 @@ func renderForPrd(w io.Writer, c *content, cfg *config.Config, cfgJson string, i
 	}
 	buf.WriteString("</script>")
 
+	if cfg.Ads != nil && len(cfg.Ads) > 0 {
+		// Seed the random number generator (typically done once)
+		rand.Seed(time.Now().UnixNano())
+
+		// Generate a random index within the bounds of the Ads slice
+		randomIndex := rand.Intn(len(cfg.Ads))
+
+		// Access the random ad string
+		randomAd := cfg.Ads[randomIndex]
+	} else {
+		randomAd := ""
+	}
+
 	return c.tpl.Execute(w, map[string]interface{}{
 		"ClientConfigJson": cfgJson,
 		"Title":            cfg.Title,
 		"Source":           html_template.HTML(buf.String()),
 		"Host":             r.Host,
 		"InitSearch":       initSearch,
+		"Promo":            randomAd,
 	})
 }
 

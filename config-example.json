@@ -9,6 +9,9 @@
     "init-search": {
         "excludeFiles": "ui/bindata.go"
     },
+    "ads": [
+        "Try it here: <a href=\"https://search.odooism.com/\">search.odooism.com</a>"
+    ],
     "repos": [
         {
             "name" : "SomeGitRepo",
