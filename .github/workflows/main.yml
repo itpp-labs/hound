@@ -42,15 +42,3 @@ jobs:
         registry: docker.pkg.github.com
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    # Commiting updates from Github Actions doesn't trigger the action again, so
-    # next steps will not be executed twice
-    - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
-      name: Commit updates
-      with:
-        user-name: Marc Demo (from Github Actions)
-        user-email: i18n-bot@it-projects.info
-        message: |
-          :alien: rebuild bindata.go
-          
-          Sent from Github Actions (see .github/workflows/main.yml )
-        #github-token: ${{ secrets.GITHUB_TOKEN }}
