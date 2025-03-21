@@ -26,7 +26,7 @@ jobs:
         ln -s $(pwd) $(go env GOPATH)/src/github.com/itpp-labs/hound
         make
     - name: Build and publish DEV Docker Image
-      uses: elgohr/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@v5
       env:
         DEV: yes
       with:
@@ -36,7 +36,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         buildargs: DEV
     - name: Build and publish Production Docker Image
-      uses: elgohr/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         name: itpp-labs/hound/production
         registry: docker.pkg.github.com
